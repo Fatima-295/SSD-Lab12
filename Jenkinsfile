@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/<your-username>/<your-repo>.git'
+                git url: 'https://github.com/Fatima-295/SSD-Lab12.git'
             }
         }
 
