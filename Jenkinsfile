@@ -4,14 +4,34 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Pull code from the Git repo
                 checkout scm
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                echo 'Running SonarQube scan...'
                 withSonarQubeEnv('SonarServer') {
-                    bat '"D:/sonar-scanner-cli-7.3.0.5189-windows-x64/sonar-scanner-7.3.0.5189-windows-x64/bin/sonar-scanner.bat"
+                     bat '"D:/sonar-scanner-cli-7.3.0.5189-windows-x64/sonar-scanner-7.3.0.5189-windows-x64/bin/sonar-scanner.bat" -Dsonar.projectKey=myproject -Dsonar.sources=. -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.login=%SONAR_AUTH_TOKEN%'
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'mvn clean package'
+            }
+        }
+    }
+}
 
 
+                   
