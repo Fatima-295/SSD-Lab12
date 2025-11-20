@@ -9,7 +9,7 @@ pipeline {
 
         stage('Test Scanner') {
             steps {
-                bat '"D:\sonar-scanner-cli-7.3.0.5189-windows-x64\sonar-scanner-7.3.0.5189-windows-x64\bin\sonar-scanner.bat" -v'
+                bat '"D:/sonar-scanner-cli-7.3.0.5189-windows-x64/sonar-scanner-7.3.0.5189-windows-x64/bin/sonar-scanner.bat" -v'
             }
         }
     }
